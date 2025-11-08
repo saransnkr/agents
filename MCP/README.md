@@ -45,5 +45,5 @@ All tools return structured responses that include event identifiers, times, and
 
 - Default OAuth scope: `https://www.googleapis.com/auth/calendar`
 - Tokens are stored in `google_token.json`; delete this file to force re-authorization.
-- The OAuth helper listens on `http://localhost:8080/`. Add this exact URI to the OAuth client’s **Authorized redirect URIs** in Google Cloud Console (or change the port via `MCP_GOOGLE_CAL_AUTH_PORT`).
+- The OAuth helper listens on `http://52.146.8.205:8080/`. Add this exact URI to the OAuth client’s **Authorized redirect URIs** in Google Cloud Console (or change the port via `MCP_GOOGLE_CAL_AUTH_PORT`).
 - You can override the host and port via the `--host` / `--port` flags or the environment variables `MCP_GOOGLE_CAL_HOST` and `MCP_GOOGLE_CAL_PORT`.

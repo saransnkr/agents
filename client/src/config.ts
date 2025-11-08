@@ -23,12 +23,12 @@ export const AVAILABLE_TRANSPORTS: TransportType[] = [
 export const DEFAULT_TRANSPORT: TransportType = 'smallwebrtc';
 
 const botStartUrl =
-  import.meta.env.VITE_BOT_START_URL || 'http://localhost:7860/start';
+  import.meta.env.VITE_BOT_START_URL || 'http://52.146.8.205:7860/start';
 const botStartPublicApiKey = import.meta.env.VITE_BOT_START_PUBLIC_API_KEY;
 
 if (!import.meta.env.VITE_BOT_START_URL) {
   console.warn(
-    'VITE_BOT_START_URL not configured, using default: http://localhost:7860/start'
+    'VITE_BOT_START_URL not configured, using default: http://52.146.8.205:7860/start'
   );
 }
 

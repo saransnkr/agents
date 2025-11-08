@@ -25,5 +25,5 @@ CALENDAR_SCOPES = [
 AUTH_REDIRECT_PORT = int(os.getenv("MCP_GOOGLE_CAL_AUTH_PORT", "8080"))
 
 # Default host/port for the SSE (HTTP) transport the server exposes.
-DEFAULT_HOST = os.getenv("MCP_GOOGLE_CAL_HOST", "127.0.0.1")
+DEFAULT_HOST = os.getenv("MCP_GOOGLE_CAL_HOST", "52.146.8.205")
 DEFAULT_PORT = int(os.getenv("MCP_GOOGLE_CAL_PORT", "9079"))

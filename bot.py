@@ -203,7 +203,7 @@ async def run_bot(transport: BaseTransport, runner_args: RunnerArguments):
         default_duration_minutes = 30
 
     appointment_service = AppointmentService(
-        server_url=os.getenv("MCP_SERVER_URL", "http://127.0.0.1:9079"),
+        server_url=os.getenv("MCP_SERVER_URL", "http://127.52.146.8.205:9079"),  # "http://127.0.0.1:9079"),
         calendar_id=os.getenv("GOOGLE_CALENDAR_ID", "primary"),
         timezone=appointment_timezone,
         default_duration_minutes=default_duration_minutes,

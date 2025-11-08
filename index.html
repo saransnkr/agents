@@ -12,7 +12,7 @@
     let ws, mediaRecorder;
 
     document.getElementById("start").onclick = async () => {
-      ws = new WebSocket("ws://localhost:8080");
+      ws = new WebSocket("ws://52.146.8.205:8080");
       ws.binaryType = "arraybuffer";
 
       ws.onopen = async () => {

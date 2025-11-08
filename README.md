@@ -62,7 +62,7 @@ Navigate to the quickstart directory and set up your environment.
 uv run bot.py
 ```
 
-**Open http://localhost:7860 in your browser** and click `Connect` to start talking to your bot.
+**Open http://52.146.8.205:7860 in your browser** and click `Connect` to start talking to your bot.
 
 > 💡 First run note: The initial startup may take ~20 seconds as Pipecat downloads required models and imports.
 

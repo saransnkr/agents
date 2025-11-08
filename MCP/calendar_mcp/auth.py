@@ -89,7 +89,7 @@ class GoogleOAuthManager:
                 str(self._paths.client_secret), self._scopes
             )
             creds = flow.run_local_server(
-                host="localhost",
+                host="52.146.8.205",
                 port=self._redirect_port,
                 authorization_prompt_message="Authorize access to Google Calendar",
                 success_message="Authorization completed. You may close this tab.",
