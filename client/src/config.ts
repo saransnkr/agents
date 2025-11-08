@@ -22,15 +22,31 @@ export const AVAILABLE_TRANSPORTS: TransportType[] = [
 
 export const DEFAULT_TRANSPORT: TransportType = 'smallwebrtc';
 
+const configuredServerOrigin =
+  import.meta.env.VITE_PIPECAT_SERVER_ORIGIN ||
+  import.meta.env.VITE_BOT_SERVER_ORIGIN ||
+  import.meta.env.VITE_SERVER_ORIGIN ||
+  'http://52.146.8.205:7860';
+
+const serverOrigin = configuredServerOrigin.replace(/\/$/, '');
+
+if (!import.meta.env.VITE_PIPECAT_SERVER_ORIGIN) {
+  console.warn(
+    `PIPECAT server origin not configured, using default: ${serverOrigin}`
+  );
+}
+
 const botStartUrl =
-  import.meta.env.VITE_BOT_START_URL || 'http://52.146.8.205:7860/start';
+  import.meta.env.VITE_BOT_START_URL || `${serverOrigin}/start`;
 const botStartPublicApiKey = import.meta.env.VITE_BOT_START_PUBLIC_API_KEY;
 
 if (!import.meta.env.VITE_BOT_START_URL) {
-  console.warn(
-    'VITE_BOT_START_URL not configured, using default: http://52.146.8.205:7860/start'
-  );
+  console.warn(`VITE_BOT_START_URL not configured, using: ${botStartUrl}`);
 }
+
+const smallWebRTCRequestEndpoint =
+  import.meta.env.VITE_SMALL_WEBRTC_ENDPOINT ||
+  `${serverOrigin}/api/offer`;
 
 const dailyConfig: DailyConnectionEndpoint = {
   endpoint: botStartUrl,
@@ -48,5 +64,7 @@ if (botStartPublicApiKey) {
 
 export const TRANSPORT_CONFIG: Record<TransportType, TransportConfig> = {
   daily: dailyConfig,
-  smallwebrtc: { webrtcRequestParams: { endpoint: 'http://52.146.8.205:7860/api/offer' } },
+  smallwebrtc: {
+    webrtcRequestParams: { endpoint: smallWebRTCRequestEndpoint },
+  },
 };
