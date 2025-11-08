@@ -203,7 +203,7 @@ async def run_bot(transport: BaseTransport, runner_args: RunnerArguments):
         default_duration_minutes = 30
 
     appointment_service = AppointmentService(
-        server_url=os.getenv("MCP_SERVER_URL", "http://127.52.146.8.205:9079"),  # "http://127.0.0.1:9079"),
+        server_url=os.getenv("MCP_SERVER_URL", "http://52.146.8.205:9079"),  # "http://127.0.0.1:9079"),
         calendar_id=os.getenv("GOOGLE_CALENDAR_ID", "primary"),
         timezone=appointment_timezone,
         default_duration_minutes=default_duration_minutes,
@@ -546,6 +546,14 @@ async def bot(runner_args: RunnerArguments):
             audio_out_enabled=True,
             vad_analyzer=SileroVADAnalyzer(params=VADParams(stop_secs=0.2)),
             turn_analyzer=LocalSmartTurnAnalyzerV3(),
+                        # ✅ Add ICE servers so the server can produce public candidates
+            ice_servers=[
+                {"urls": ["stun:stun.l.google.com:19302",
+                          "stun:stun1.l.google.com:19302",
+                          "stun:stun2.l.google.com:19302"]},
+                # If you have a TURN server, add it here:
+                # {"urls": ["turn:your.turn.host:3478"], "username": "user", "credential": "pass"},
+            ],
         ),
     }
 
