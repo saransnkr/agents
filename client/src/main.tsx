@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { ThemeProvider } from '@pipecat-ai/voice-ui-kit';
@@ -12,18 +12,11 @@ import {
 } from '@pipecat-ai/voice-ui-kit';
 
 import { App } from './components/App';
-import {
-  AVAILABLE_TRANSPORTS,
-  DEFAULT_TRANSPORT,
-  TRANSPORT_CONFIG,
-} from './config';
-import type { TransportType } from './config';
+import { DEFAULT_TRANSPORT, TRANSPORT_CONFIG } from './config';
 import './index.css';
 
 export const Main = () => {
-  const [transportType, setTransportType] =
-    useState<TransportType>(DEFAULT_TRANSPORT);
-
+  const transportType = DEFAULT_TRANSPORT;
   const connectParams = TRANSPORT_CONFIG[transportType];
 
   return (
@@ -47,9 +40,6 @@ export const Main = () => {
                 client={client}
                 handleConnect={handleConnect}
                 handleDisconnect={handleDisconnect}
-                transportType={transportType}
-                onTransportChange={setTransportType}
-                availableTransports={AVAILABLE_TRANSPORTS}
               />
             )
           }

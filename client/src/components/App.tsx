@@ -6,21 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { PlasmaVisualizer } from "@pipecat-ai/voice-ui-kit/webgl";
 import { TranscriptOverlay } from "@pipecat-ai/voice-ui-kit";
 
-type TranscriptMessage = {
-  type: "transcript";
-  speaker: string;
-  text?: string;
-};
-
-const isTranscriptMessage = (value: unknown): value is TranscriptMessage => {
-  if (typeof value !== "object" || value === null) {
-    return false;
-  }
-
-  const candidate = value as Partial<TranscriptMessage>;
-  return candidate.type === "transcript" && typeof candidate.speaker === "string";
-};
-
 export const App = ({
   client,
   handleConnect,
@@ -52,25 +37,46 @@ export const App = ({
         accent: "from-indigo-300/20 via-transparent to-transparent",
       };
 
-  // Initialize Pipecat and mic
+  // Initialize Pipecat and subscribe to transcript events
   useEffect(() => {
-    client?.initDevices();
-    if (!client) return;
+    if (!client) {
+      return;
+    }
 
-    const onMessage = (message: unknown) => {
-      if (!isTranscriptMessage(message)) {
-        return;
-      }
+    client.initDevices().catch((error) => {
+      console.error("Failed to initialise devices", error);
+    });
 
+    const handleUserTranscript = (data: { text?: string }) => {
       setTranscript({
-        speaker: message.speaker,
-        text: message.text || "",
+        speaker: "user",
+        text: data.text || "",
       });
-      setIsThinking(message.speaker !== "user");
+      setIsThinking(true);
     };
 
-    client.on("message", onMessage);
-    return () => client.off("message", onMessage);
+    const handleBotTranscript = (data: { text?: string }) => {
+      setTranscript({
+        speaker: "assistant",
+        text: data.text || "",
+      });
+      setIsThinking(false);
+    };
+
+    const handleBotLlmStarted = () => setIsThinking(true);
+    const handleBotLlmStopped = () => setIsThinking(false);
+
+    client.on("userTranscript", handleUserTranscript);
+    client.on("botTranscript", handleBotTranscript);
+    client.on("botLlmStarted", handleBotLlmStarted);
+    client.on("botLlmStopped", handleBotLlmStopped);
+
+    return () => {
+      client.off("userTranscript", handleUserTranscript);
+      client.off("botTranscript", handleBotTranscript);
+      client.off("botLlmStarted", handleBotLlmStarted);
+      client.off("botLlmStopped", handleBotLlmStopped);
+    };
   }, [client]);
 
   // Handle connect/disconnect
