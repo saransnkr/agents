@@ -48,5 +48,5 @@ if (botStartPublicApiKey) {
 
 export const TRANSPORT_CONFIG: Record<TransportType, TransportConfig> = {
   daily: dailyConfig,
-  smallwebrtc: { webrtcRequestParams: { endpoint: 'http://52.146.8.205:7860/api/offer' } },
+  smallwebrtc: { webrtcRequestParams: { endpoint: 'http://localhost:7860/api/offer' } },
 };
